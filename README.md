@@ -22,7 +22,7 @@ For sharing content you'll need to add the following frameworks to your project:
 - MessageUI.framework (part of the iOS SDK, used to send email)
 - Twitter.framework (part of the iOS SDK, used to send tweets)
 
-*Please Note* - You should weakly link the Twitter.framework if you want your app to run on iOS4. ABCiOSKit will only attempt to share via Twitter if the framework is present.
+*Please Note* - You should weakly link the Twitter.framework if you want your app to run on iOS4. BCDShareSheet will only attempt to share via Twitter if the framework is present.
 
 Adding the Framework to Your Project
 ------------------------------------
