@@ -8,6 +8,8 @@
 
 #import "BCDShareableItem.h"
 
+#import "BCDShareSheetMacros.h"
+
 @implementation BCDShareableItem
 
 @synthesize title = _title;
@@ -32,7 +34,9 @@
     [self setImageURLString:nil];
     [self setItemURLString:nil];
     
+#if !BCDSHARE_USE_ARC
     [super dealloc];
+#endif
 }
 
 @end

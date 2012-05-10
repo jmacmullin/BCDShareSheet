@@ -24,6 +24,7 @@ NSString * const kFBExpiryDateKey = @"FBExpirationDateKey";
 
 #import <Twitter/Twitter.h>
 #import "BCDShareSheet.h"
+#import "BCDShareSheetMacros.h"
 
 typedef void (^CompletionBlock)(BCDResult);
 
@@ -77,14 +78,16 @@ typedef void (^CompletionBlock)(BCDResult);
     [self setRootViewController:nil];
     [self setCompletionBlock:nil];
     
+#if !BCDSHARE_USE_ARC
     [super dealloc];
+#endif
 }
 
 - (UIActionSheet *)sheetForSharing:(BCDShareableItem *)item completion:(void (^)(BCDResult))completionBlock {
     [self setItem:item];
     
     [self setCompletionBlock:completionBlock];
-        
+    
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share via"
                                                        delegate:self
                                               cancelButtonTitle:nil
@@ -97,7 +100,7 @@ typedef void (^CompletionBlock)(BCDResult);
     
     [sheet setCancelButtonIndex:[sheet addButtonWithTitle:@"Cancel"]];
     
-    [sheet autorelease];
+    BCDSHARE_AUTORELEASE(sheet);
     return sheet;
 }
 
@@ -149,16 +152,16 @@ typedef void (^CompletionBlock)(BCDResult);
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError*)error {
     [self.rootViewController dismissModalViewControllerAnimated:YES];
-                            
-                            if (error!=nil) {
-                                if (self.completionBlock!=nil) {
-                                    self.completionBlock(BCDResultFailure);
-                                }
-                            } else {
-                                if (self.completionBlock!=nil) {
-                                    self.completionBlock(BCDResultSuccess);
-                                }
-                            }
+    
+    if (error!=nil) {
+        if (self.completionBlock!=nil) {
+            self.completionBlock(BCDResultFailure);
+        }
+    } else {
+        if (self.completionBlock!=nil) {
+            self.completionBlock(BCDResultSuccess);
+        }
+    }
 }
 
 
@@ -176,7 +179,7 @@ typedef void (^CompletionBlock)(BCDResult);
         [self showFacebookShareDialog];
     }
 }
-     
+
 #pragma mark -
 #pragma mark Private Methods
 
@@ -195,11 +198,11 @@ typedef void (^CompletionBlock)(BCDResult);
         }
         
         NSDictionary *facebookService = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     [NSNumber numberWithInt:BCDFacebookService], kServiceKey, 
-                                     kFacebookServiceTitle, kTitleKey,
-                                     nil];
+                                         [NSNumber numberWithInt:BCDFacebookService], kServiceKey, 
+                                         kFacebookServiceTitle, kTitleKey,
+                                         nil];
         [services addObject:facebookService];
-
+        
         // Twitter is only available on iOS5 or later
         if([TWTweetComposeViewController class]) {
             NSDictionary *twitterService = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -235,7 +238,7 @@ typedef void (^CompletionBlock)(BCDResult);
     
     [mailComposeViewController setMessageBody:body isHTML:NO];
     [self.rootViewController presentModalViewController:mailComposeViewController animated:YES];
-    [mailComposeViewController release];
+    BCDSHARE_RELEASE(mailComposeViewController);
 }
 
 #pragma mark - Facebook
@@ -260,7 +263,7 @@ typedef void (^CompletionBlock)(BCDResult);
     if (self.facebook == nil) {
         Facebook *facebook = [[Facebook alloc] initWithAppId:self.facebookAppID andDelegate:self];
         [self setFacebook:facebook];
-        [facebook release];
+        BCDSHARE_RELEASE(facebook);
     }
 }
 
@@ -293,7 +296,7 @@ typedef void (^CompletionBlock)(BCDResult);
     }
     [self.facebook dialog:@"feed" andParams:params andDelegate:self];
 }
-    
+
 
 #pragma mark - FaceBook Dialog Delegate
 
@@ -331,26 +334,27 @@ typedef void (^CompletionBlock)(BCDResult);
     if (self.hashTag!=nil) {
         [tweetText appendFormat:@" #%@", self.hashTag];
     }
-        
+    
     TWTweetComposeViewController *tweetComposeViewController = [[TWTweetComposeViewController alloc] init];
     [tweetComposeViewController setInitialText:tweetText];
     [tweetComposeViewController addURL:[NSURL URLWithString:self.item.itemURLString]];
     [self.rootViewController presentModalViewController:tweetComposeViewController animated:YES];
     
+    BCDSHARE_WEAK_IVAR BCDShareSheet *weakRef = self;
     [tweetComposeViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result) {
         switch (result) {
             case TWTweetComposeViewControllerResultDone:
-                if (self.completionBlock!=nil) {
+                if (weakRef.completionBlock!=nil) {
                     dispatch_async(dispatch_get_main_queue(), ^{            
-                        self.completionBlock(BCDResultSuccess);
+                        weakRef.completionBlock(BCDResultSuccess);
                     });
                 }
                 break;
                 
             default:
-                if (self.completionBlock!=nil) {
+                if (weakRef.completionBlock!=nil) {
                     dispatch_async(dispatch_get_main_queue(), ^{            
-                        self.completionBlock(BCDResultFailure);
+                        weakRef.completionBlock(BCDResultFailure);
                     });
                     
                 }
@@ -358,11 +362,11 @@ typedef void (^CompletionBlock)(BCDResult);
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{            
-            [self.rootViewController dismissViewControllerAnimated:NO completion:nil];
+            [weakRef.rootViewController dismissViewControllerAnimated:NO completion:nil];
         });
     }];
     
-    [tweetComposeViewController release];
+    BCDSHARE_RELEASE(tweetComposeViewController);
 }
 
 
