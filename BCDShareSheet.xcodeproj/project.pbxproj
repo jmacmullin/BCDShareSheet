@@ -115,6 +115,7 @@
 		23C8B1D014C791C4006FDC53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		23C8B1D214C791C4006FDC53 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		23C8B1F014C79416006FDC53 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		E78067E7155BE602001E39EE /* BCDShareSheetMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCDShareSheetMacros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +144,7 @@
 		234EABDE14C7999C005178A4 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				E78067E7155BE602001E39EE /* BCDShareSheetMacros.h */,
 				234EABDF14C7999C005178A4 /* BCDShareableItem.h */,
 				234EABE014C7999C005178A4 /* BCDShareableItem.m */,
 				234EABE114C7999C005178A4 /* BCDShareSheet.h */,
