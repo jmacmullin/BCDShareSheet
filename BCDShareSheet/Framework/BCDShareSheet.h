@@ -12,6 +12,13 @@ typedef enum {
     BCDResultCancel
 } BCDResult;
 
+typedef enum {
+	BCDEmailService = 1 << 0,
+    BCDMessageService = 1 << 1,
+    BCDFacebookService = 1 << 2,
+    BCDTwitterService = 1 << 3
+} BCDService;
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
@@ -28,7 +35,7 @@ typedef enum {
  You'll need to provide a 'rootViewController' that can be used for presenting modal views (such
  as a mail compose view) and a Facebook App ID.
  */
-@interface BCDShareSheet : NSObject <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, 
+@interface BCDShareSheet : NSObject <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate,
                                    FBSessionDelegate, FBDialogDelegate>
 
 /**
@@ -71,5 +78,10 @@ typedef enum {
  The hashtag you would like to add to any tweets sent via this sharer.
  */
 @property (nonatomic, retain) NSString *hashTag;
+
+/**
+ Enabled services will be shown in the share dialog.
+ */
+@property (nonatomic, assign) BCDService services;
 
 @end

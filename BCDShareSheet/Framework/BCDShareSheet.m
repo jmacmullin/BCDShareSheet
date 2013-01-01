@@ -6,16 +6,6 @@
 //  Copyright (c) 2012 Jake MacMullin.
 //
 
-typedef enum {
-	BCDEmailService,
-    BCDFacebookService,
-    BCDTwitterService
-} BCDService;
-
-NSString * const kEmailServiceTitle = @"Email";
-NSString * const kFacebookServiceTitle = @"Facebook";
-NSString * const kTwitterServiceTitle = @"Twitter";
-
 NSString * const kTitleKey = @"title";
 NSString * const kServiceKey = @"service";
 
@@ -24,6 +14,10 @@ NSString * const kFBExpiryDateKey = @"FBExpirationDateKey";
 
 #import <Twitter/Twitter.h>
 #import "BCDShareSheet.h"
+#import "NSBundle+BundleName.h"
+
+#undef NSLocalizedString
+#define NSLocalizedString(key, comment) [[NSBundle bundleWithName:@"BCDShareSheet.bundle"] localizedStringForKey:(key) value:(key) table:@"BCDShareSheet"]
 
 typedef void (^CompletionBlock)(BCDResult);
 
@@ -60,6 +54,7 @@ typedef void (^CompletionBlock)(BCDResult);
 @synthesize availableSharingServices = _availableSharingServices;
 @synthesize facebook = _facebook;
 @synthesize waitingForFacebookAuthorisation = _waitingForFacebookAuthorisation;
+@synthesize services = _services;
 
 + (BCDShareSheet *)sharedSharer {
     static BCDShareSheet *sharedInstance = nil;
@@ -68,6 +63,16 @@ typedef void (^CompletionBlock)(BCDResult);
         sharedInstance = [[self alloc] init];
     });
     return sharedInstance;
+}
+
+- (id)init
+{
+    if (self = [super init])
+    {
+        self.services = (BCDEmailService | BCDMessageService | BCDFacebookService | BCDTwitterService);
+    }
+    
+    return self;
 }
 
 - (void)dealloc {
@@ -85,7 +90,7 @@ typedef void (^CompletionBlock)(BCDResult);
     
     [self setCompletionBlock:completionBlock];
         
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share via"
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"SHEET_TITLE", @"BCDShareSheet", [NSBundle bundleWithName:@"BCDShareSheet.bundle"], @"Title of the share sheet.")
                                                        delegate:self
                                               cancelButtonTitle:nil
                                          destructiveButtonTitle:nil
@@ -95,7 +100,7 @@ typedef void (^CompletionBlock)(BCDResult);
         [sheet addButtonWithTitle:[serviceDictionary valueForKey:kTitleKey]];
     }
     
-    [sheet setCancelButtonIndex:[sheet addButtonWithTitle:@"Cancel"]];
+    [sheet setCancelButtonIndex:[sheet addButtonWithTitle:NSLocalizedString(@"SHEET_CANCEL", @"Cancel button in share sheet.")]];
     
     [sheet autorelease];
     return sheet;
@@ -126,6 +131,10 @@ typedef void (^CompletionBlock)(BCDResult);
     switch (selectedService) {
         case BCDEmailService:
             [self shareViaEmail];
+            break;
+        
+        case BCDMessageService:
+            [self shareViaMessage];
             break;
             
         case BCDFacebookService:
@@ -161,6 +170,14 @@ typedef void (^CompletionBlock)(BCDResult);
                             }
 }
 
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    
+    if (self.completionBlock!=nil) {
+        self.completionBlock(BCDResultSuccess);
+    }
+}
 
 #pragma mark -
 #pragma mark FBSessionDelegate Methods
@@ -184,27 +201,38 @@ typedef void (^CompletionBlock)(BCDResult);
     if (self.availableSharingServices==nil) {
         
         NSMutableArray *services = [NSMutableArray array];
-        
+                
         // Check to see if email if available
-        if ([MFMailComposeViewController canSendMail]) {
+        if ([MFMailComposeViewController canSendMail] && self.services & BCDEmailService) {
             NSDictionary *mailService = [NSDictionary dictionaryWithObjectsAndKeys:
                                          [NSNumber numberWithInt:BCDEmailService], kServiceKey, 
-                                         kEmailServiceTitle, kTitleKey,
+                                         NSLocalizedString(@"EMAIL_OPTION", @"E-mail sharing option."), kTitleKey,
                                          nil];
             [services addObject:mailService];
         }
         
-        NSDictionary *facebookService = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     [NSNumber numberWithInt:BCDFacebookService], kServiceKey, 
-                                     kFacebookServiceTitle, kTitleKey,
-                                     nil];
-        [services addObject:facebookService];
+        // Check to see if message is available
+        if ([MFMessageComposeViewController canSendText] && self.services & BCDMessageService) {
+            NSDictionary *messageService = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:BCDMessageService], kServiceKey,
+                                            NSLocalizedString(@"MESSAGE_OPTION", @"SMS sharing option."), kTitleKey,
+                                            nil];
+            [services addObject:messageService];
+        }
+        
+        if (self.services & BCDFacebookService)
+        {
+            NSDictionary *facebookService = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSNumber numberWithInt:BCDFacebookService], kServiceKey,
+                                             NSLocalizedString(@"FACEBOOK_OPTION", @"Facebook sharing option."), kTitleKey,
+                                             nil];
+            [services addObject:facebookService];
+        }
 
         // Twitter is only available on iOS5 or later
-        if([TWTweetComposeViewController class]) {
+        if ([TWTweetComposeViewController class] && self.services & BCDTwitterService) {
             NSDictionary *twitterService = [NSDictionary dictionaryWithObjectsAndKeys:
                                             [NSNumber numberWithInt:BCDTwitterService], kServiceKey, 
-                                            kTwitterServiceTitle, kTitleKey,
+                                            NSLocalizedString(@"TWITTER_OPTION", @"Twitter sharing option."), kTitleKey,
                                             nil];
             [services addObject:twitterService];
         }
@@ -230,12 +258,36 @@ typedef void (^CompletionBlock)(BCDResult);
     }
     
     if (self.appName!=nil) {        
-        [body appendFormat:@"\n\nSent from %@", self.appName];
+        [body appendFormat:NSLocalizedString(@"EMAIL_SIGNATURE", @"Signature for e-mail. %@ is replaced with the app name."), self.appName];
     }
     
     [mailComposeViewController setMessageBody:body isHTML:NO];
     [self.rootViewController presentModalViewController:mailComposeViewController animated:YES];
     [mailComposeViewController release];
+}
+
+#pragma mark - Message
+- (void)shareViaMessage {
+    MFMessageComposeViewController *messageComposeViewController = [[MFMessageComposeViewController alloc] init];
+    [messageComposeViewController setMessageComposeDelegate:self];
+    
+    NSMutableString *body = [NSMutableString string];
+    
+    [body appendFormat:@"%@\n", self.item.title];
+    if (self.item.itemURLString!=nil) {
+        [body appendFormat:@"%@\n", self.item.itemURLString];
+    }
+    if (self.item.description!=nil) {
+        [body appendFormat:@"%@", self.item.description];
+    }
+    
+    if (self.appName!=nil) {
+        [body appendFormat:NSLocalizedString(@"EMAIL_SIGNATURE", @"Signature for e-mail. %@ is replaced with the app name."), self.appName];
+    }
+    
+    [messageComposeViewController setBody:body];
+    [self.rootViewController presentModalViewController:messageComposeViewController animated:YES];
+    [messageComposeViewController release];
 }
 
 #pragma mark - Facebook
@@ -364,7 +416,6 @@ typedef void (^CompletionBlock)(BCDResult);
     
     [tweetComposeViewController release];
 }
-
 
 
 @end

@@ -46,13 +46,9 @@
 		234EAC2B14C799C3005178A4 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1414C799C3005178A4 /* NSString+SBJSON.m */; };
 		234EAC2C14C799C3005178A4 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1414C799C3005178A4 /* NSString+SBJSON.m */; };
 		234EAC2D14C799C3005178A4 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1614C799C3005178A4 /* SBJSON.m */; };
-		234EAC2E14C799C3005178A4 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1614C799C3005178A4 /* SBJSON.m */; };
 		234EAC2F14C799C3005178A4 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1814C799C3005178A4 /* SBJsonBase.m */; };
-		234EAC3014C799C3005178A4 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1814C799C3005178A4 /* SBJsonBase.m */; };
 		234EAC3114C799C3005178A4 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1A14C799C3005178A4 /* SBJsonParser.m */; };
-		234EAC3214C799C3005178A4 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1A14C799C3005178A4 /* SBJsonParser.m */; };
 		234EAC3314C799C3005178A4 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1C14C799C3005178A4 /* SBJsonWriter.m */; };
-		234EAC3414C799C3005178A4 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1C14C799C3005178A4 /* SBJsonWriter.m */; };
 		234EAC4514C7A69A005178A4 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234EAC4314C7A679005178A4 /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		234EAC4614C7A69A005178A4 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234EAC4114C7A672005178A4 /* MessageUI.framework */; };
 		234EAC4814C7A740005178A4 /* BCDShareableItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 234EABDF14C7999C005178A4 /* BCDShareableItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -65,6 +61,13 @@
 		23C8B1CF14C791C4006FDC53 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C8B1CE14C791C4006FDC53 /* UIKit.framework */; };
 		23C8B1D114C791C4006FDC53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C8B1D014C791C4006FDC53 /* Foundation.framework */; };
 		23C8B1D314C791C4006FDC53 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C8B1D214C791C4006FDC53 /* CoreGraphics.framework */; };
+		5E6663121693889200F3BDDB /* BCDShareSheet.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5E6663111693889200F3BDDB /* BCDShareSheet.bundle */; };
+		5E6663151693890E00F3BDDB /* NSBundle+BundleName.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6663141693890E00F3BDDB /* NSBundle+BundleName.m */; };
+		5E66633F16938AE800F3BDDB /* NSBundle+BundleName.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6663141693890E00F3BDDB /* NSBundle+BundleName.m */; };
+		5E66634416938AFB00F3BDDB /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1614C799C3005178A4 /* SBJSON.m */; };
+		5E66634616938AFB00F3BDDB /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1814C799C3005178A4 /* SBJsonBase.m */; };
+		5E66634816938AFB00F3BDDB /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1A14C799C3005178A4 /* SBJsonParser.m */; };
+		5E66634A16938AFB00F3BDDB /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 234EAC1C14C799C3005178A4 /* SBJsonWriter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +118,9 @@
 		23C8B1D014C791C4006FDC53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		23C8B1D214C791C4006FDC53 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		23C8B1F014C79416006FDC53 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		5E6663111693889200F3BDDB /* BCDShareSheet.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BCDShareSheet.bundle; sourceTree = "<group>"; };
+		5E6663131693890E00F3BDDB /* NSBundle+BundleName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BundleName.h"; sourceTree = "<group>"; };
+		5E6663141693890E00F3BDDB /* NSBundle+BundleName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BundleName.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,10 +149,13 @@
 		234EABDE14C7999C005178A4 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				5E6663111693889200F3BDDB /* BCDShareSheet.bundle */,
 				234EABDF14C7999C005178A4 /* BCDShareableItem.h */,
 				234EABE014C7999C005178A4 /* BCDShareableItem.m */,
 				234EABE114C7999C005178A4 /* BCDShareSheet.h */,
 				234EABE214C7999C005178A4 /* BCDShareSheet.m */,
+				5E6663131693890E00F3BDDB /* NSBundle+BundleName.h */,
+				5E6663141693890E00F3BDDB /* NSBundle+BundleName.m */,
 				234EABE314C7999C005178A4 /* Supporting Files */,
 			);
 			name = Framework;
@@ -322,7 +331,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = BCD;
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Jake MacMullin";
 			};
 			buildConfigurationList = 23C8B1C414C791C4006FDC53 /* Build configuration list for PBXProject "BCDShareSheet" */;
@@ -331,6 +340,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				da,
 			);
 			mainGroup = 23C8B1BF14C791C4006FDC53;
 			productRefGroup = 23C8B1CB14C791C4006FDC53 /* Products */;
@@ -361,6 +371,7 @@
 				234EABFF14C799AB005178A4 /* BCDViewController.xib in Resources */,
 				234EAC0014C799AB005178A4 /* InfoPlist.strings in Resources */,
 				234EAC1F14C799C3005178A4 /* FBDialog.bundle in Resources */,
+				5E6663121693889200F3BDDB /* BCDShareSheet.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +398,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E66634416938AFB00F3BDDB /* SBJSON.m in Sources */,
+				5E66634616938AFB00F3BDDB /* SBJsonBase.m in Sources */,
+				5E66634816938AFB00F3BDDB /* SBJsonParser.m in Sources */,
+				5E66634A16938AFB00F3BDDB /* SBJsonWriter.m in Sources */,
+				5E66633F16938AE800F3BDDB /* NSBundle+BundleName.m in Sources */,
 				234EABE914C7999C005178A4 /* BCDShareableItem.m in Sources */,
 				234EABEB14C7999C005178A4 /* BCDShareSheet.m in Sources */,
 				234EAC1E14C799C3005178A4 /* Facebook.m in Sources */,
@@ -395,10 +411,6 @@
 				234EAC2814C799C3005178A4 /* FBRequest.m in Sources */,
 				234EAC2A14C799C3005178A4 /* NSObject+SBJSON.m in Sources */,
 				234EAC2C14C799C3005178A4 /* NSString+SBJSON.m in Sources */,
-				234EAC2E14C799C3005178A4 /* SBJSON.m in Sources */,
-				234EAC3014C799C3005178A4 /* SBJsonBase.m in Sources */,
-				234EAC3214C799C3005178A4 /* SBJsonParser.m in Sources */,
-				234EAC3414C799C3005178A4 /* SBJsonWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +433,7 @@
 				234EAC2F14C799C3005178A4 /* SBJsonBase.m in Sources */,
 				234EAC3114C799C3005178A4 /* SBJsonParser.m in Sources */,
 				234EAC3314C799C3005178A4 /* SBJsonWriter.m in Sources */,
+				5E6663151693890E00F3BDDB /* NSBundle+BundleName.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +480,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BCDShareSheet/Framework/Supporting Files/BCDShareSheet-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "BCDShareSheet/Framework/Supporting Files/BCDShareSheet-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -495,6 +509,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BCDShareSheet/Framework/Supporting Files/BCDShareSheet-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "BCDShareSheet/Framework/Supporting Files/BCDShareSheet-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
